@@ -2,10 +2,16 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"log"
 	"os/exec"
+	"time"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/widget"
 )
 
 func ocr(path string) string {
@@ -29,24 +35,30 @@ func get_rune_infos() (string, string, string) {
 	return name, stats, subs
 }
 
+func get_rune_name() string {
+	name, _, _ := get_rune_infos()
+	return name
+}
+
 func main() {
-	generate_tmp_imgs()
-	rune_name, rune_stats, rune_subs := get_rune_infos()
 
-	fmt.Print("\nRune Stats:\n", rune_stats)
-	fmt.Print("Rune Name:\n", rune_name)
-	fmt.Print("Rune Efficiency: ", get_efficiency(get_hit_number(rune_subs, rune_stats)), "%", "\n")
-	// fmt.Print("Rune Inate Efficiency: ", get_efficiency(get_hit_number(rune_name)), "%", "\n")
-	// // a := app.New()
-	// w := a.NewWindow("SW Live Rune Analyzer")
+	a := app.New()
+	w := a.NewWindow("SW Live Rune Analyzer")
 
-	// hello := widget.NewLabel("SW Live Rune Analyzer")
-	// w.SetContent(container.NewVBox(
-	// 	hello,
-	// 	widget.NewButton("Select your game window", func() {
-	// 		hello.SetText("Welcome :)")
-	// 	}),
-	// ))
-	// w.Resize(fyne.NewSize(640, 460))
-	// w.ShowAndRun()
+	title := widget.NewLabel("SW Live Rune Analyzer")
+	txtBound := binding.NewString()
+	txtWid := widget.NewEntryWithData(txtBound)
+	txtWid.MultiLine = true
+	w.SetContent(container.NewVBox(
+		title, txtWid,
+		widget.NewButton("Scan Rune", func() {
+			for {
+				rune_name, _, _, current_efficiency := get_efficiency()
+				txtBound.Set(rune_name + "\n" + "Efficiency: " + current_efficiency + "%")
+				time.Sleep(time.Millisecond * 250)
+			}
+		}),
+	))
+	w.Resize(fyne.NewSize(640, 460))
+	w.ShowAndRun()
 }

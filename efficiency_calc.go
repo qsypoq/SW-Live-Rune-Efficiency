@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -61,8 +62,15 @@ func get_hit_number(subs string, stat string) float64 {
 	return total_hits
 }
 
-func get_efficiency(hit_number float64) float64 {
+func compute_efficiency(hit_number float64) float64 {
 	efficiency := 100 + ((hit_number - 9) * 11.11)
 	efficiency = math.Round(efficiency*100) / 100
 	return efficiency
+}
+
+func get_efficiency() (string, string, string, string) {
+	generate_tmp_imgs()
+	rune_name, rune_stats, rune_subs := get_rune_infos()
+	current_efficiency := fmt.Sprintf("%.2f", compute_efficiency(get_hit_number(rune_subs, rune_stats)))
+	return rune_name, rune_stats, rune_subs, current_efficiency
 }
