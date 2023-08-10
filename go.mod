@@ -8,6 +8,7 @@ require (
 	fyne.io/systray v1.10.1-0.20230602210930-b6a2d6ca2a7b // indirect
 	github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802 // indirect
 	github.com/anthonynsimon/bild v0.13.0 // indirect
+	github.com/dariubs/percent v1.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/deluan/lookup v0.0.7 // indirect
 	github.com/disintegration/gift v1.2.1 // indirect

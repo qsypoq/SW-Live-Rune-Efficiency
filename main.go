@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"io"
 	"log"
+	"os"
 	"os/exec"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -35,30 +36,26 @@ func get_rune_infos() (string, string, string) {
 	return name, stats, subs
 }
 
-func get_rune_name() string {
-	name, _, _ := get_rune_infos()
-	return name
-}
-
 func main() {
-
+	os.Setenv("FYNE_THEME", "dark")
 	a := app.New()
 	w := a.NewWindow("SW Live Rune Analyzer")
 
 	title := widget.NewLabel("SW Live Rune Analyzer")
-	txtBound := binding.NewString()
-	txtWid := widget.NewEntryWithData(txtBound)
-	txtWid.MultiLine = true
-	w.SetContent(container.NewVBox(
-		title, txtWid,
-		widget.NewButton("Scan Rune", func() {
-			for {
-				rune_name, _, _, current_efficiency := get_efficiency()
-				txtBound.Set(rune_name + "\n" + "Efficiency: " + current_efficiency + "%")
-				time.Sleep(time.Millisecond * 250)
-			}
-		}),
-	))
-	w.Resize(fyne.NewSize(640, 460))
+	efficiency_str := widget.NewLabelWithStyle("", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	title_item := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), title, layout.NewSpacer())
+	rune_efficience_item := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), efficiency_str, layout.NewSpacer())
+	w.SetContent(
+		container.NewVBox(title_item,
+			rune_efficience_item,
+			widget.NewButton("Scan Rune", func() {
+				for {
+					rune_name, _, _, current_efficiency := get_efficiency()
+					efficiency_str.SetText(rune_name + "\n" + current_efficiency + "%")
+					time.Sleep(time.Millisecond * 250)
+				}
+			}),
+		))
+	w.Resize(fyne.NewSize(225, 170))
 	w.ShowAndRun()
 }
