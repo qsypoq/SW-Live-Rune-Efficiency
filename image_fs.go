@@ -6,12 +6,12 @@ import (
 	"os"
 )
 
-func loadImageFromFile(imgPath string) image.Image {
-	imageFile, _ := os.Open(imgPath)
-	defer imageFile.Close()
-	img, _, _ := image.Decode(imageFile)
-	return img
-}
+// func loadImageFromFile(imgPath string) image.Image {
+// 	imageFile, _ := os.Open(imgPath)
+// 	defer imageFile.Close()
+// 	img, _, _ := image.Decode(imageFile)
+// 	return img
+// }
 
 func save_screen(img image.Image, filePath string) {
 	f, err := os.Create(filePath)

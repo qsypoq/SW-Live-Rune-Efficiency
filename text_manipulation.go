@@ -18,10 +18,8 @@ func clean_char(to_clean string, char string) string {
 func split_stats(rune_subs string) []string {
 	repercent := regexp.MustCompile("\n")
 	percent_done := repercent.ReplaceAllString(rune_subs, "|")
-
 	cleaned := clean_char(percent_done, "\\)")
 	cleaned = clean_char(cleaned, "\\(")
-
 	cleaned = clean_char(cleaned, "\\(")
 	cleaned = clean_char(cleaned, "©")
 	result := strings.Split(cleaned, "|")

@@ -27,18 +27,21 @@ func get_hit_value(value string, sub string) float64 {
 }
 
 func get_hit_number(subs string, stat string) float64 {
-
 	splitted := split_stats(subs)
 	total_hits := float64(0)
+
 	for _, v := range splitted {
 		if !strings.Contains(v, "+") {
 			continue
 		}
 		result := strings.Split(v, "+")
 		subs := trimAllSpace(result[0])
+		subs = clean_char(subs, "[0-9]")
 		value := trimAllSpace(result[1])
+
 		if strings.Contains(value, "%") {
 			if strings.Contains(subs, "HP") || strings.Contains(subs, "ATK") || strings.Contains(subs, "DEF") {
+				subs = strings.TrimSpace(subs)
 				subs = subs + "per"
 			}
 			value = strings.Replace(value, "%", "", -1)
@@ -53,10 +56,11 @@ func get_hit_number(subs string, stat string) float64 {
 		splitted := split_stats(stat)
 		result := strings.Split(splitted[1], "+")
 		subs := trimAllSpace(result[0])
+		subs = clean_char(subs, "[0-9]")
 		value := trimAllSpace(result[1])
-
 		if strings.Contains(value, "%") {
 			if strings.Contains(subs, "HP") || strings.Contains(subs, "ATK") || strings.Contains(subs, "DEF") {
+				subs = strings.TrimSpace(subs)
 				subs = subs + "per"
 			}
 			value = strings.Replace(value, "%", "", -1)

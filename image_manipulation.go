@@ -23,7 +23,6 @@ func crop_custom(img image.Image, width int, height int, anchor gift.Anchor) ima
 }
 
 func generate_rune_name(img image.Image) image.Image {
-
 	finaldst := crop_custom(img, 625, 350, gift.LeftAnchor)
 	generated := crop_custom(finaldst, 550, 75, gift.TopRightAnchor)
 	return generated
@@ -43,6 +42,7 @@ func generate_rune_subs(img image.Image) image.Image {
 
 func generate_rune(img image.Image) {
 	adjusted__img := adjust_brightness(img)
+	// native_ocr(generate_rune_name(adjusted__img), generate_rune_stats(adjusted__img), generate_rune_subs(adjusted__img))
 	save_screen(generate_rune_name(adjusted__img), "files/tmp/tmp_name.png")
 	save_screen(generate_rune_stats(adjusted__img), "files/tmp/tmp_stats.png")
 	save_screen(generate_rune_subs(adjusted__img), "files/tmp/tmp_subs.png")
