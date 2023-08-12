@@ -1,11 +1,7 @@
 package main
 
 import (
-	"bytes"
-	"io"
-	"log"
 	"os"
-	"os/exec"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -14,52 +10,6 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
-
-func ocr(path string) string {
-	cmdArgs := []string{path, "stdout", "--psm", "6"}
-	cmd := exec.Command("C:\\Program Files\\Tesseract-OCR\\tesseract.exe", cmdArgs...)
-
-	var out bytes.Buffer
-	multi := io.MultiWriter(&out)
-	cmd.Stdout = multi
-
-	if err := cmd.Run(); err != nil {
-		log.Fatalln(err)
-	}
-	return out.String()
-}
-
-func get_rune_infos() (string, string, string) {
-	name := ocr("files/tmp/tmp_name.png")
-	stats := ocr("files/tmp/tmp_stats.png")
-	subs := ocr("files/tmp/tmp_subs.png")
-	return name, stats, subs
-}
-
-// func image_to_byte(img image.Image) []byte {
-// 	buf := new(bytes.Buffer)
-// 	err := png.Encode(buf, img)
-// 	if err != nil {
-// 		fmt.Println("failed to create buffer", err)
-// 	}
-// 	img_byte := buf.Bytes()
-// 	return img_byte
-// }
-
-// func byte_to_txt(img_byte []byte) string {
-// 	client := gosseract.NewClient()
-// 	defer client.Close()
-// 	client.SetImageFromBytes(img_byte)
-// 	setimg_txt, _ := client.Text()
-// 	return setimg_txt
-// }
-
-// func native_ocr(name_img image.Image, stats_img image.Image, subs_img image.Image) (string, string, string) {
-// 	name := byte_to_txt(image_to_byte(name_img))
-// 	stats := byte_to_txt(image_to_byte(stats_img))
-// 	subs := byte_to_txt(image_to_byte(subs_img))
-// 	return name, stats, subs
-// }
 
 func main() {
 	os.Setenv("FYNE_THEME", "dark")

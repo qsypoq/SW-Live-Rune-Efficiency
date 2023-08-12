@@ -79,8 +79,7 @@ func compute_efficiency(hit_number float64) float64 {
 }
 
 func get_efficiency() (string, string, string, string) {
-	generate_tmp_imgs()
-	rune_name, rune_stats, rune_subs := get_rune_infos()
+	rune_name, rune_stats, rune_subs := generate_rune()
 	current_efficiency := fmt.Sprintf("%.2f", compute_efficiency(get_hit_number(rune_subs, rune_stats)))
 	return rune_name, rune_stats, rune_subs, current_efficiency
 }

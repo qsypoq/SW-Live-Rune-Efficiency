@@ -40,10 +40,11 @@ func generate_rune_subs(img image.Image) image.Image {
 	return generated
 }
 
-func generate_rune(img image.Image) {
+func generate_rune() (string, string, string) {
+	img, _ := capture("Summoners War - MuMu Player")
 	adjusted__img := adjust_brightness(img)
-	// native_ocr(generate_rune_name(adjusted__img), generate_rune_stats(adjusted__img), generate_rune_subs(adjusted__img))
-	save_screen(generate_rune_name(adjusted__img), "files/tmp/tmp_name.png")
-	save_screen(generate_rune_stats(adjusted__img), "files/tmp/tmp_stats.png")
-	save_screen(generate_rune_subs(adjusted__img), "files/tmp/tmp_subs.png")
+	name := get_text(generate_rune_name(adjusted__img))
+	stats := get_text(generate_rune_stats(adjusted__img))
+	subs := get_text(generate_rune_subs(adjusted__img))
+	return name, stats, subs
 }
