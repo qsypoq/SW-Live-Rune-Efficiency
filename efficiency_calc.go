@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image/color"
 	"strconv"
 	"strings"
 )
@@ -81,5 +82,19 @@ func compute_efficiency(hit_number float64) float64 {
 func get_efficiency() (string, string, string, string) {
 	rune_name, rune_stats, rune_subs := generate_rune()
 	current_efficiency := fmt.Sprintf("%.2f", compute_efficiency(get_hit_number(rune_subs, rune_stats)))
-	return rune_name, rune_stats, rune_subs, current_efficiency
+	return clean_char(rune_name, "\n"), rune_stats, rune_subs, current_efficiency
+}
+
+func get_tier(efficiency string) (string, color.RGBA) {
+	score, _ := strconv.ParseFloat(efficiency, 64)
+	switch {
+	case score < 85.7142857:
+		return "Inate Rare Tier", color.RGBA{R: 67, G: 214, B: 215, A: 255}
+	case score > 85.7142857 && score < 92.8571429:
+		return "Inate Hero Tier", color.RGBA{R: 121, G: 28, B: 93, A: 255}
+	case score > 92.8571429:
+		return "Inate Legend Tier", color.RGBA{R: 187, G: 75, B: 28, A: 255}
+	default:
+		return "error", color.RGBA{0, 0, 0, 1}
+	}
 }
