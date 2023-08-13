@@ -15,28 +15,30 @@ func adjust_brightness(img image.Image) image.Image {
 	return dst
 }
 
-func crop_custom(img image.Image, width int, height int, anchor gift.Anchor) image.Image {
-	h := gift.New(gift.CropToSize(width, height, anchor))
+func crop_custom(img image.Image, ratiow float64, ratioh float64, anchor gift.Anchor) image.Image {
+	width := img.Bounds().Dx()
+	height := img.Bounds().Dy()
+	h := gift.New(gift.CropToSize(int(float64(width)*ratiow), int(float64(height)*ratioh), anchor))
 	resized := image.NewRGBA(h.Bounds(img.Bounds()))
 	h.Draw(resized, img)
 	return resized
 }
 
 func generate_rune_name(img image.Image) image.Image {
-	finaldst := crop_custom(img, 625, 350, gift.LeftAnchor)
-	generated := crop_custom(finaldst, 550, 75, gift.TopRightAnchor)
+	finaldst := crop_custom(img, 0.8803, 0.7778, gift.LeftAnchor)
+	generated := crop_custom(finaldst, 0.88, 0.2143, gift.TopRightAnchor)
 	return generated
 }
 
 func generate_rune_stats(img image.Image) image.Image {
-	finaldst := crop_custom(img, 570, 250, gift.TopRightAnchor)
-	generated := crop_custom(finaldst, 300, 125, gift.BottomLeftAnchor)
+	finaldst := crop_custom(img, 0.8028, 0.5556, gift.TopRightAnchor)
+	generated := crop_custom(finaldst, 0.5263, 0.5, gift.BottomLeftAnchor)
 	return generated
 }
 
 func generate_rune_subs(img image.Image) image.Image {
-	finaldst := crop_custom(img, 380, 360, gift.LeftAnchor)
-	generated := crop_custom(finaldst, 705, 150, gift.BottomRightAnchor)
+	finaldst := crop_custom(img, 0.5352, 0.80, gift.LeftAnchor)
+	generated := crop_custom(finaldst, 1, 0.4167, gift.BottomRightAnchor)
 	return generated
 }
 

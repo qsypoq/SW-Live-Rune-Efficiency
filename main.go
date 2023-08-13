@@ -1,6 +1,7 @@
 package main
 
 import (
+	"image"
 	"os"
 	"time"
 
@@ -11,11 +12,19 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+func loadImageFromFile(imgPath string) image.Image {
+	imageFile, _ := os.Open(imgPath)
+	defer imageFile.Close()
+	img, _, _ := image.Decode(imageFile)
+	return img
+}
+
 func main() {
 	os.Setenv("FYNE_THEME", "dark")
 	a := app.New()
 	w := a.NewWindow("SW Live Rune Analyzer")
-
+	logo, _ := fyne.LoadResourceFromPath("./logo.png")
+	w.SetIcon(logo)
 	title := widget.NewLabel("SW Live Rune Analyzer")
 	efficiency_str := widget.NewLabelWithStyle("", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	title_item := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), title, layout.NewSpacer())
@@ -26,7 +35,7 @@ func main() {
 		scan = false
 		w.SetContent(
 			container.NewVBox(title_item,
-				start_button,
+				layout.NewSpacer(), start_button,
 			))
 		w.Content().Refresh()
 	})
@@ -35,21 +44,21 @@ func main() {
 		scan = true
 		w.SetContent(
 			container.NewVBox(title_item,
-				rune_efficience_item, stop_button,
+				rune_efficience_item, layout.NewSpacer(), stop_button,
 			))
 		w.Content().Refresh()
 		inf_run := func() {
 			for scan == true {
 				rune_name, _, _, current_efficiency := get_efficiency()
 				efficiency_str.SetText(rune_name + "\n" + current_efficiency + "%")
-				time.Sleep(time.Millisecond * 250)
+				time.Sleep(time.Millisecond * 200)
 			}
 		}
 		go inf_run()
 	})
 	w.SetContent(
 		container.NewVBox(title_item,
-			rune_efficience_item, start_button,
+			rune_efficience_item, layout.NewSpacer(), start_button,
 		))
 	w.Content().Refresh()
 	w.Resize(fyne.NewSize(225, 170))

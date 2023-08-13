@@ -197,7 +197,10 @@ func captureWindow(handle syscall.Handle, rect image.Rectangle) (image.Image, er
 	dst := image.NewRGBA(img.Bounds())
 	gift.New().Draw(dst, img)
 
-	g := gift.New(gift.CropToSize(710, 450, gift.TopRightAnchor))
+	ratiow := 0.4184
+	ratioh := 0.4536
+
+	g := gift.New(gift.CropToSize(int(float64(width)*ratiow), int(float64(height)*ratioh), gift.TopRightAnchor))
 	finaldst := image.NewRGBA(g.Bounds(dst.Bounds()))
 	g.Draw(finaldst, dst)
 
