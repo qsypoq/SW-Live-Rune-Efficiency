@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -79,10 +80,29 @@ func compute_efficiency(hit_number float64) float64 {
 	return efficiency
 }
 
-func get_efficiency() (string, string, string, string) {
+func futur_procs(rune_name string) int {
+	if strings.Contains(rune_name, "+") {
+		re := regexp.MustCompile("^\\+[0-9]+")
+		levelstring := re.FindString(rune_name)
+		level := clean_char(levelstring, "\\+")
+		level_int, _ := strconv.Atoi(level)
+		if level_int >= 12 {
+			return 0
+		}
+		to_proc := fmt.Sprintf("%.0f", (float64(12)-float64(level_int))/3)
+		to_proci, _ := strconv.Atoi(to_proc)
+		return to_proci
+	} else {
+		return 4
+	}
+}
+
+func get_efficiency() (string, string, string, string, string) {
 	rune_name, rune_stats, rune_subs := generate_rune()
+	to_proc := futur_procs(rune_name)
 	current_efficiency := fmt.Sprintf("%.2f", compute_efficiency(get_hit_number(rune_subs, rune_stats)))
-	return clean_char(rune_name, "\n"), rune_stats, rune_subs, current_efficiency
+	potentiel_efficiency := fmt.Sprintf("%.2f", compute_efficiency(get_hit_number(rune_subs, rune_stats)+(float64(to_proc)*0.2)))
+	return clean_char(rune_name, "\n"), rune_stats, rune_subs, current_efficiency, potentiel_efficiency
 }
 
 func get_tier(efficiency string) (string, color.RGBA) {
