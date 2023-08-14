@@ -91,7 +91,7 @@ func get_tier(efficiency string) (string, color.RGBA) {
 	case score < 85.7142857:
 		return "Inate Rare Tier", color.RGBA{R: 67, G: 214, B: 215, A: 255}
 	case score > 85.7142857 && score < 92.8571429:
-		return "Inate Hero Tier", color.RGBA{R: 121, G: 28, B: 93, A: 255}
+		return "Inate Hero Tier", color.RGBA{R: 193, G: 17, B: 140, A: 255}
 	case score > 92.8571429:
 		return "Inate Legend Tier", color.RGBA{R: 187, G: 75, B: 28, A: 255}
 	default:

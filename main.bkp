@@ -40,7 +40,7 @@ func main() {
 			container.NewVBox(title_item,
 				layout.NewSpacer(), start_button,
 			))
-		w.Resize(fyne.NewSize(225, 170))
+		// w.Resize(fyne.NewSize(225, 170))
 		w.Content().Refresh()
 	})
 
@@ -50,7 +50,7 @@ func main() {
 			container.NewVBox(title_item, rune_name_txt,
 				rune_eff_txt, rune_tier_txt, layout.NewSpacer(), stop_button,
 			))
-		w.Resize(fyne.NewSize(225, 170))
+		// w.Resize(fyne.NewSize(225, 170))
 		w.Content().Refresh()
 		inf_run := func() {
 			for scan == true {
@@ -58,7 +58,8 @@ func main() {
 				rune_name_txt.Text = rune_name
 				rune_eff_txt.Text = current_efficiency + "%"
 				rune_tier_txt.Text, rune_tier_txt.Color = get_tier(current_efficiency)
-				w.Content().Refresh()
+				// w.Resize(fyne.NewSize(225, 170))
+				// w.Content().Refresh()
 				time.Sleep(time.Millisecond * 200)
 			}
 		}
