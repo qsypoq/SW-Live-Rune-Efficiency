@@ -24,6 +24,7 @@ var max_value = map[string]int{
 
 func get_hit_value(value string, sub string) float64 {
 	intvalue, _ := strconv.Atoi(value)
+	sub = correct_stat(sub)
 	hit := float64(intvalue) / float64(max_value[sub])
 	return hit
 }
@@ -50,7 +51,7 @@ func get_hit_number(subs string, stat string) float64 {
 		}
 		hit_number := get_hit_value(value, subs)
 		total_hits = total_hits + hit_number
-		// fmt.Print(subs, ":", value, ":", hit_number, "\n")
+		fmt.Print(subs, ":", value, ":", hit_number, "\n")
 	}
 
 	if strings.Count(stat, "+") == 2 {
@@ -69,7 +70,7 @@ func get_hit_number(subs string, stat string) float64 {
 		}
 		hit_inate := get_hit_value(value, subs)
 		total_hits = total_hits + hit_inate
-		// fmt.Print(subs, ":", value, ":", hit_inate, "\n")
+		fmt.Print(subs, ":", value, ":", hit_inate, "\n")
 	}
 
 	return total_hits
@@ -109,11 +110,11 @@ func get_tier(efficiency string) (string, color.RGBA) {
 	score, _ := strconv.ParseFloat(efficiency, 64)
 	switch {
 	case score < 85.7142857:
-		return "Inate Rare Tier", color.RGBA{R: 67, G: 214, B: 215, A: 255}
+		return "Inate Rare", color.RGBA{R: 67, G: 214, B: 215, A: 255}
 	case score > 85.7142857 && score < 92.8571429:
-		return "Inate Hero Tier", color.RGBA{R: 193, G: 17, B: 140, A: 255}
+		return "Inate Hero", color.RGBA{R: 193, G: 17, B: 140, A: 255}
 	case score > 92.8571429:
-		return "Inate Legend Tier", color.RGBA{R: 187, G: 75, B: 28, A: 255}
+		return "Inate Legend", color.RGBA{R: 187, G: 75, B: 28, A: 255}
 	default:
 		return "error", color.RGBA{0, 0, 0, 1}
 	}

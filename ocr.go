@@ -8,12 +8,13 @@ import (
 	"io"
 	"log"
 	"os/exec"
+	"syscall"
 )
 
 func ocrbis(img []byte) string {
 	cmdArgs := []string{"stdin", "stdout", "--psm", "6"}
 	cmd := exec.Command("C:\\Program Files\\Tesseract-OCR\\tesseract.exe", cmdArgs...)
-
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
 		panic(err)

@@ -28,3 +28,42 @@ func split_stats(rune_subs string) []string {
 	// }
 	return result
 }
+
+func stat_exist(stat string) bool {
+	for value, _ := range max_value {
+		if stat == value {
+			return true
+		}
+	}
+	return false
+}
+
+func correct_stat(stat string) string {
+	hit := 0
+	try := 0
+	if stat_exist(stat) {
+		return stat
+	} else {
+		for value, _ := range max_value {
+			hit = 0
+			try = 0
+			if len(stat) != len(value) {
+				continue
+			} else {
+				for i := 0; i < len(value); i++ {
+					if value[i] == stat[i] {
+						hit = hit + 1
+						try = try + 1
+					} else {
+						try = try + 1
+					}
+				}
+				if float64(hit)/float64(try) > 0.66 {
+					return value
+				}
+
+			}
+		}
+	}
+	return "error"
+}
