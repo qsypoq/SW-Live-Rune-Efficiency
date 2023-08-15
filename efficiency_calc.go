@@ -110,11 +110,11 @@ func get_tier(efficiency string) (string, color.RGBA) {
 	score, _ := strconv.ParseFloat(efficiency, 64)
 	switch {
 	case score < 85.7142857:
-		return "Inate Rare", color.RGBA{R: 67, G: 214, B: 215, A: 255}
+		return "Rare", color.RGBA{R: 67, G: 214, B: 215, A: 255}
 	case score > 85.7142857 && score < 92.8571429:
-		return "Inate Hero", color.RGBA{R: 193, G: 17, B: 140, A: 255}
+		return "Hero", color.RGBA{R: 193, G: 17, B: 140, A: 255}
 	case score > 92.8571429:
-		return "Inate Legend", color.RGBA{R: 187, G: 75, B: 28, A: 255}
+		return "Legend", color.RGBA{R: 187, G: 75, B: 28, A: 255}
 	default:
 		return "error", color.RGBA{0, 0, 0, 1}
 	}
