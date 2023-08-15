@@ -51,7 +51,7 @@ func get_hit_number(subs string, stat string) float64 {
 		}
 		hit_number := get_hit_value(value, subs)
 		total_hits = total_hits + hit_number
-		fmt.Print(subs, ":", value, ":", hit_number, "\n")
+		// fmt.Print(subs, ":", value, ":", hit_number, "\n")
 	}
 
 	if strings.Count(stat, "+") == 2 {
@@ -70,7 +70,7 @@ func get_hit_number(subs string, stat string) float64 {
 		}
 		hit_inate := get_hit_value(value, subs)
 		total_hits = total_hits + hit_inate
-		fmt.Print(subs, ":", value, ":", hit_inate, "\n")
+		// fmt.Print(subs, ":", value, ":", hit_inate, "\n")
 	}
 
 	return total_hits
