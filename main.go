@@ -2,38 +2,38 @@ package main
 
 import (
 	"image/color"
-	"os"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
-	os.Setenv("FYNE_THEME", "dark")
 	a := app.New()
+	a.Settings().SetTheme(theme.DarkTheme())
 	w := a.NewWindow("SW Live Rune Analyzer")
 	logo, _ := fyne.LoadResourceFromPath("./logo.png")
 	w.SetIcon(logo)
-	title_item := gen_txt("SW Live Rune Analyzer", color.White, fyne.TextStyle{Bold: false})
+	title_item := gen_txt("SW Live Rune Analyzer", color.White, fyne.TextStyle{Bold: false}, 13)
 	scan := false
-	rune_name_txt := gen_txt("Rune Name", color.White, fyne.TextStyle{Bold: true})
-	rune_eff_txt := gen_txt("Rune Eff", color.White, fyne.TextStyle{Bold: false})
-	rune_tier_txt := gen_txt("Rune Tier", color.White, fyne.TextStyle{Bold: false})
-	rune_maxeff_txt := gen_txt("Rune Max Eff", color.White, fyne.TextStyle{Bold: false})
-	rune_maxtier_txt := gen_txt("Rune Max Tier", color.White, fyne.TextStyle{Bold: false})
+	rune_name_txt := gen_txt("Rune Name", color.White, fyne.TextStyle{Bold: true}, 13)
+	rune_eff_txt := gen_txt("Rune Eff", color.White, fyne.TextStyle{Bold: false}, 12)
+	rune_tier_txt := gen_txt("Rune Tier", color.White, fyne.TextStyle{Bold: false}, 12)
+	rune_maxeff_txt := gen_txt("Rune Max Eff", color.White, fyne.TextStyle{Bold: false}, 12)
+	rune_maxtier_txt := gen_txt("Rune Max Tier", color.White, fyne.TextStyle{Bold: false}, 12)
 	start_button := widget.NewButton("Scan Rune", func() {})
 	custom_container := container.NewVBox()
-	stop_button := widget.NewButton("Stop Scan", func() {
+	stop_button := widget.NewButtonWithIcon("Stop Scan", theme.ContentClearIcon(), func() {
 		scan = false
 		customize_container(custom_container, []fyne.CanvasObject{title_item, layout.NewSpacer(), start_button})
 		w.Content().Refresh()
 	})
 
-	start_button = widget.NewButton("Scan Rune", func() {
+	start_button = widget.NewButtonWithIcon("Start Scan", theme.NavigateNextIcon(), func() {
 		scan = true
 		customize_container(custom_container, []fyne.CanvasObject{title_item, rune_name_txt, rune_name_txt, rune_eff_txt, rune_tier_txt, rune_maxeff_txt, rune_maxtier_txt, layout.NewSpacer(), stop_button})
 		w.Content().Refresh()
@@ -65,7 +65,7 @@ func main() {
 	custom_container.Refresh()
 	w.SetContent(custom_container)
 	w.Content().Refresh()
-	w.Resize(fyne.NewSize(225, 170))
+	w.Resize(fyne.NewSize(225, 220))
 	go setontop("SW Live Rune Analyzer")
 	w.ShowAndRun()
 }

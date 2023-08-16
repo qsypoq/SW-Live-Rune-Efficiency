@@ -62,10 +62,11 @@ func SetWindowAlwaysOnTop(hwnd uintptr) {
 	setwindowpos.Call(hwnd, IntToUintptr(-1), 0, 0, 100, 100, SWP_NOSIZE|SWP_NOMOVE)
 }
 
-func gen_txt(content string, color color.Color, style fyne.TextStyle) *canvas.Text {
+func gen_txt(content string, color color.Color, style fyne.TextStyle, size float32) *canvas.Text {
 	newtxt := canvas.NewText(content, color)
 	newtxt.Alignment = fyne.TextAlignCenter
 	newtxt.TextStyle = style
+	newtxt.TextSize = size
 	return newtxt
 }
 
